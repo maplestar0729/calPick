@@ -1,0 +1,88 @@
+.tophol{
+	background-color:#dddddd;
+	color:red;
+	font-size:10px;
+
+}
+.holint {
+	background-color: #dddddd;
+	color:red;
+}
+.no_holint {
+	background-color: white;
+	color:black;
+}
+.todayint{
+	background-color: yellow;
+	color: #00AA00;
+}
+/*.todayint:hover{
+	color: #00AA00;
+}*/
+
+.setDay{
+	background-color: blue;
+	color: white;
+}
+
+.dayClickEvent:hover{
+	background-color: #CCDDFF;
+	color: black;
+}
+.dayClickEvent{
+	font-size:10px;
+	PADDING-RIGHT: 4px;
+	PADDING-LEFT: 5px;
+	PADDING-Top: 0px;
+	PADDING-bottom: 0px;
+	TEXT-ALIGN: center;
+	TEXT-DECORATION: none;
+	font-weight: bold;
+	cursor:pointer;
+
+}
+.tbclass {
+
+	left: 0px;
+	top: 0px;
+	background-color: white;
+	position: absolute;
+	z-index:1150;
+}
+.monselbg {
+	font-family:Arial;
+	FONT-SIZE: 8pt;
+	BORDER: #DEC035 1px solid;
+	PADDING-RIGHT: 0px;
+	PADDING-LEFT: 0px;
+	PADDING-Top: 0px;
+	PADDING-bottom: 0px;
+	background:url(nbk.jpg);
+	HEIGHT: 10pt;
+	TEXT-ALIGN: center;
+	TEXT-DECORATION: none;
+}
+.monsel {
+	font-family:Arial;
+	FONT-SIZE: 8pt;
+	COLOR:black;
+	PADDING-RIGHT: 0px;
+	PADDING-LEFT: 0px;
+	PADDING-Top: 0px;
+	PADDING-bottom: 0px;
+	background:url(nbk.jpg);
+	width: 20pt;
+	HEIGHT: 10pt;
+	TEXT-ALIGN: center;
+	TEXT-DECORATION: none;
+}
+.cal-modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1140;
+    background-color: #000;
+    opacity: .5;
+}

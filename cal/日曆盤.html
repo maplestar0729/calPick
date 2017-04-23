@@ -1,0 +1,214 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="jquery-1.12.0.min.js" type="text/javascript"></script>
+<script>
+function padLeft(str,lenght){
+    if((str+"").length >= lenght)
+        return str;
+    else
+        return padLeft("0" +str,lenght);
+}
+</script>
+</head>
+<body>
+
+<input  id="sel_Date_ipt">
+<table  id="calTab" style="display:none">
+<thead>
+</thead>
+<tbody >
+</tbody>
+</table>
+
+
+<script>
+var cal = function(){
+	
+
+	var d = new Date();
+	
+	
+	
+	this.cal_mon = d.getMonth() + 1 ;
+	this.cal_year = d.getFullYear();
+	
+	
+	dateArr = ["日","一","二","三","四","五","六"]
+
+	var tbdy = $("#calTab tbody")
+	var tmp_str = "";
+	var tab_elm = $("#calTab")
+	var tab_head = $("#calTab thead");
+	
+	var prt_head = function(){
+		//tmp_str = tmp_str + "1";
+		//顯示年分、月份
+		//tmp_str = "<thead>"
+		tmp_str = "<tr>"
+		tmp_str += "<td class='prev_year'><< </td>"
+		tmp_str += "<td class='prev_mon'> < </td>"
+			
+		tmp_str += "<td colspan='3' id='now_mon'>"+this.cal_year +"/" + this.cal_mon  +" </td>"
+		tmp_str += "<td class='next_mon'> > </td>"
+		tmp_str += "<td class='next_year'> >> </td>"
+		tmp_str += "</tr>"
+		
+		//tbdy.append(tmp_str);
+
+		
+		//星期抬頭
+		tmp_str += "<tr>";
+		for(i = 0; i<7; i++)
+		{
+			tmp_str += "<th>"+dateArr[i]+"</th>";
+		}
+		tmp_str += "</tr>";
+		
+		//tmp_str += "</thead>"
+		tab_head.html(tmp_str);
+		
+		//換月
+		$(".prev_mon").click(function(){
+			cal_mon -= 1;
+			chgMon(cal_mon)
+			
+		});
+		
+		$(".next_mon").click(function(){
+			cal_mon += 1;
+			chgMon(cal_mon)
+		});
+		function chgMon(set_Mon)
+		{
+			if(set_Mon == 0)
+			{	
+				cal_year -= 1;
+				d.setFullYear(cal_year);
+				cal_mon = 12;
+				d.setMonth(cal_mon);
+			}else if(set_Mon == 13){
+				cal_year += 1;
+				d.setFullYear(cal_year);
+				cal_mon = 1;
+				d.setMonth(cal_mon-1);
+			}else{
+				d.setMonth(cal_mon-1);
+			}
+			cal_mon = d.getMonth()+1;
+			cal_year = d.getFullYear();
+			$("#now_mon").html( cal_year +"/" + cal_mon )
+			
+			prtTbody();
+		}
+		
+		
+		//換年
+		$(".prev_year").click(function(){
+			cal_year -= 1;
+			d.setFullYear(cal_year)
+			$("#now_mon").html( cal_year +"/" + cal_mon )
+			
+			prtTbody();
+		});
+		
+		$(".next_year").click(function(){
+			cal_year += 1;
+			d.setFullYear(cal_year)
+			$("#now_mon").html( cal_year +"/" + cal_mon )
+			
+			prtTbody();
+		});
+		
+
+	}
+	var prtTbody = function(){
+		//洗白日曆盤
+		tbdy.html("");
+	
+		//取得本月1號
+		var d_1 = d;
+		d_1.setDate(1);
+
+		//建立第一周
+		var weekDay_1 = d_1.getDay();
+
+		tmp_str = "<tr>";
+		for(i = 0 ; i<weekDay_1 ; i++)
+		{
+			tmp_str += "<td></td>";
+		}
+
+		monDate = d_1;
+		for(i = weekDay_1; i < 7 ; i++)
+		{
+			tmp_str += "<td class='can_sel_day'>" + monDate.getDate() +"</td>";
+			monDate.setDate(monDate.getDate() + 1);
+		}
+		tmp_str += "</tr>";
+
+		tbdy.append(tmp_str);
+
+		//建立日曆
+		var nowMon = monDate.getMonth();
+		for(;nowMon == monDate.getMonth();)
+		{
+			tmp_str = "<tr>";
+			for(i = 0; i < 7 && nowMon == monDate.getMonth() ; i++)
+			{
+				tmp_str += "<td class='can_sel_day'>" + monDate.getDate() +"</td>";
+				monDate.setDate(monDate.getDate() + 1);
+			}
+			tmp_str += "</tr>";
+			
+			tbdy.append(tmp_str);
+		}
+
+		$("#calTab .can_sel_day").click(function(){
+			var tmp_day = $(this).html();
+			var tmp_d = new Date(cal_year+"-"+cal_mon + "-"+ tmp_day);
+			var tmp_str_date = tmp_d.getFullYear() + "/" + padLeft((tmp_d.getMonth()+1),2)
+								+ "/" + padLeft(tmp_d.getDate(),2);
+			
+			$("#sel_Date_ipt").val(tmp_str_date);
+		})
+	}
+	
+	
+	
+	
+	
+	
+	
+	this.init = function(date_str){
+		if(date_str)
+		{
+			var tmp_sel_date = date_str;
+			var tmp_d = new Date(tmp_sel_date);
+			cal_mon = tmp_d.getMonth() +1 ;
+			cal_year = tmp_d.getFullYear();
+			d = tmp_d;
+		}else{
+			d = new Date();
+			cal_mon = d.getMonth() +1 ;
+			cal_year = d.getFullYear();
+		}
+		prtTbody();
+		prt_head();
+	}
+	
+}
+
+var set_cal = new cal();
+$("#sel_Date_ipt").click(function(){
+	$("#calTab").toggle();
+	var tmp_str = $(this).val();
+	set_cal.init(tmp_str)
+})
+
+//$("#calTab").html(tmp_str);
+
+//console.log(tmp_str);
+</script>
+</body>
+</html>
